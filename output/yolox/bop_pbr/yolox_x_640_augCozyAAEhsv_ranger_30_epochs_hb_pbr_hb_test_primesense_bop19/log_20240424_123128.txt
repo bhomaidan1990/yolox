@@ -1,0 +1,214 @@
+[0424_063128] det.yolox.engine.yolox_setup INFO@99: Rank of current process: 0. World size: 1
+[0424_063129] det.yolox.engine.yolox_setup INFO@100: Environment info:
+-------------------------------  -------------------------------------------------------------------------
+sys.platform                     linux
+Python                           3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
+numpy                            1.23.5
+detectron2                       0.6 @/home/belal/git/detectron2/detectron2
+Compiler                         GCC 12.3
+CUDA compiler                    CUDA 12.2
+detectron2 arch flags            6.1
+DETECTRON2_ENV_MODULE            <not set>
+PyTorch                          2.2.2+cu121 @/home/belal/.local/lib/python3.10/site-packages/torch
+PyTorch debug build              False
+torch._C._GLIBCXX_USE_CXX11_ABI  False
+GPU available                    Yes
+GPU 0                            NVIDIA GeForce GTX 1070 with Max-Q Design (arch=6.1)
+Driver version                   550.54.15
+CUDA_HOME                        /usr/local/cuda
+Pillow                           9.0.1
+torchvision                      0.17.2+cu121 @/home/belal/.local/lib/python3.10/site-packages/torchvision
+torchvision arch flags           5.0, 6.0, 7.0, 7.5, 8.0, 8.6, 9.0
+fvcore                           0.1.5.post20221221
+iopath                           0.1.9
+cv2                              4.5.4
+-------------------------------  -------------------------------------------------------------------------
+PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.2 (Git Hash 2dc95a2ad0841e29db8b22fbccaf3e5da7992b01)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.2.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+[0424_063129] det.yolox.engine.yolox_setup INFO@102: Command line arguments: Namespace(config_file='configs/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19.py', resume=False, eval_only=True, num_gpus=1, num_machines=1, machine_rank=0, dist_url='tcp://127.0.0.1:50152', opts=['train.init_checkpoint=output/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19/model_final.pth'])
+[0424_063129] det.yolox.engine.yolox_setup INFO@104: Contents of args.config_file=configs/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19.py:
+[38;5;197mimport[39m[38;5;15m [39m[38;5;15mos[39m[38;5;15m.[39m[38;5;15mpath[39m[38;5;15m [39m[38;5;81mas[39m[38;5;15m [39m[38;5;15mosp[39m
+
+[38;5;197mimport[39m[38;5;15m [39m[38;5;15mtorch[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mdetectron2[39m[38;5;15m.[39m[38;5;15mconfig[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mLazyCall[39m[38;5;15m [39m[38;5;81mas[39m[38;5;15m [39m[38;5;15mL[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mdetectron2[39m[38;5;15m.[39m[38;5;15msolver[39m[38;5;15m.[39m[38;5;15mbuild[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mget_default_optimizer_params[39m
+
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15m.[39m[38;5;15myolox_base[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mtrain[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mval[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mtest[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mmodel[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mdataloader[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15moptimizer[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mlr_config[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mDATASETS[39m[38;5;15m  [39m[38;5;242m# noqa[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mdet[39m[38;5;15m.[39m[38;5;15myolox[39m[38;5;15m.[39m[38;5;15mdata[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mbuild_yolox_test_loader[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mValTransform[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mdet[39m[38;5;15m.[39m[38;5;15myolox[39m[38;5;15m.[39m[38;5;15mdata[39m[38;5;15m.[39m[38;5;15mdatasets[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mBase_DatasetFromList[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mdetectron2[39m[38;5;15m.[39m[38;5;15mdata[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mget_detection_dataset_dicts[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mdet[39m[38;5;15m.[39m[38;5;15myolox[39m[38;5;15m.[39m[38;5;15mevaluators[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mYOLOX_COCOEvaluator[39m
+[38;5;197mfrom[39m[38;5;15m [39m[38;5;15mlib[39m[38;5;15m.[39m[38;5;15mtorch_utils[39m[38;5;15m.[39m[38;5;15msolver[39m[38;5;15m.[39m[38;5;15mranger[39m[38;5;15m [39m[38;5;197mimport[39m[38;5;15m [39m[38;5;15mRanger[39m
+
+[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mupdate[39m[38;5;15m([39m
+[38;5;15m    [39m[38;5;15moutput_dir[39m[38;5;197m=[39m[38;5;15mosp[39m[38;5;197m.[39m[38;5;15mabspath[39m[38;5;15m([39m[38;5;15m__file__[39m[38;5;15m)[39m[38;5;197m.[39m[38;5;15mreplace[39m[38;5;15m([39m[38;5;186m"[39m[38;5;186mconfigs[39m[38;5;186m"[39m[38;5;15m,[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186moutput[39m[38;5;186m"[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m1[39m[38;5;15m)[39m[38;5;15m[[39m[38;5;141m0[39m[38;5;15m:[39m[38;5;197m-[39m[38;5;141m3[39m[38;5;15m][39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15mexp_name[39m[38;5;197m=[39m[38;5;15mosp[39m[38;5;197m.[39m[38;5;15msplit[39m[38;5;15m([39m[38;5;15mosp[39m[38;5;197m.[39m[38;5;15mabspath[39m[38;5;15m([39m[38;5;15m__file__[39m[38;5;15m)[39m[38;5;15m)[39m[38;5;15m[[39m[38;5;141m1[39m[38;5;15m][39m[38;5;15m[[39m[38;5;141m0[39m[38;5;15m:[39m[38;5;197m-[39m[38;5;141m3[39m[38;5;15m][39m[38;5;15m,[39m[38;5;15m  [39m[38;5;242m# .py[39m
+[38;5;15m)[39m
+[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mamp[39m[38;5;197m.[39m[38;5;15menabled[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+
+[38;5;15mmodel[39m[38;5;197m.[39m[38;5;15mbackbone[39m[38;5;197m.[39m[38;5;15mdepth[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m1.33[39m
+[38;5;15mmodel[39m[38;5;197m.[39m[38;5;15mbackbone[39m[38;5;197m.[39m[38;5;15mwidth[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m1.25[39m
+
+[38;5;15mmodel[39m[38;5;197m.[39m[38;5;15mhead[39m[38;5;197m.[39m[38;5;15mnum_classes[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m33[39m
+
+[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15minit_checkpoint[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mpretrained_models/yolox/yolox_x.pth[39m[38;5;186m"[39m
+
+[38;5;242m# datasets[39m
+[38;5;15mDATASETS[39m[38;5;197m.[39m[38;5;15mTRAIN[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15m[[39m[38;5;186m"[39m[38;5;186mhb_pbr_train[39m[38;5;186m"[39m[38;5;15m][39m
+[38;5;15mDATASETS[39m[38;5;197m.[39m[38;5;15mTEST[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15m[[39m[38;5;186m"[39m[38;5;186mhb_test_primesense_bop19[39m[38;5;186m"[39m[38;5;15m][39m
+
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mdataset[39m[38;5;197m.[39m[38;5;15mlst[39m[38;5;197m.[39m[38;5;15mnames[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15mDATASETS[39m[38;5;197m.[39m[38;5;15mTRAIN[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mtotal_batch_size[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m32[39m
+
+[38;5;242m# color aug[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mCOLOR_AUG_PROB[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m0.8[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mCOLOR_AUG_TYPE[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mcode[39m[38;5;186m"[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mCOLOR_AUG_CODE[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15m([39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSequential([[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;242m# Sometimes(0.5, PerspectiveTransform(0.05)),[39m
+[38;5;15m    [39m[38;5;242m# Sometimes(0.5, CropAndPad(percent=(-0.05, 0.1))),[39m
+[38;5;15m    [39m[38;5;242m# Sometimes(0.5, Affine(scale=(1.0, 1.2))),[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.5, CoarseDropout( p=0.2, size_percent=0.05) ),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.4, GaussianBlur((0., 3.))),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.3, pillike.EnhanceSharpness(factor=(0., 50.))),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.3, pillike.EnhanceContrast(factor=(0.2, 50.))),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.5, pillike.EnhanceBrightness(factor=(0.1, 6.))),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.3, pillike.EnhanceColor(factor=(0., 20.))),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.5, Add((-25, 25), per_channel=0.3)),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.3, Invert(0.2, per_channel=True)),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.5, Multiply((0.6, 1.4), per_channel=0.5)),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.5, Multiply((0.6, 1.4))),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.1, AdditiveGaussianNoise(scale=10, per_channel=True)),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186mSometimes(0.5, iaa.contrast.LinearContrast((0.5, 2.2), per_channel=0.3)),[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;242m# "Sometimes(0.5, Grayscale(alpha=(0.0, 1.0))),"  # maybe remove for det[39m
+[38;5;15m    [39m[38;5;186m"[39m[38;5;186m], random_order=True)[39m[38;5;186m"[39m
+[38;5;15m    [39m[38;5;242m# cosy+aae[39m
+[38;5;15m)[39m
+
+[38;5;242m# hsv color aug[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mAUG_HSV_PROB[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m1.0[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mHSV_H[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m0.015[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mHSV_S[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m0.7[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mHSV_V[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m0.4[39m
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15maug_wrapper[39m[38;5;197m.[39m[38;5;15mFORMAT[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;186m"[39m[38;5;186mRGB[39m[38;5;186m"[39m
+
+[38;5;15moptimizer[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mRanger[39m[38;5;15m)[39m[38;5;15m([39m
+[38;5;15m    [39m[38;5;15mparams[39m[38;5;197m=[39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mget_default_optimizer_params[39m[38;5;15m)[39m[38;5;15m([39m
+[38;5;15m        [39m[38;5;242m# params.model is meant to be set to the model object, before instantiating[39m
+[38;5;15m        [39m[38;5;242m# the optimizer.[39m
+[38;5;15m        [39m[38;5;15mweight_decay_norm[39m[38;5;197m=[39m[38;5;141m0.0[39m[38;5;15m,[39m
+[38;5;15m        [39m[38;5;15mweight_decay_bias[39m[38;5;197m=[39m[38;5;141m0.0[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15m)[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15mlr[39m[38;5;197m=[39m[38;5;141m0.001[39m[38;5;15m,[39m[38;5;15m  [39m[38;5;242m# bs=64[39m
+[38;5;15m    [39m[38;5;242m# momentum=0.9,[39m
+[38;5;15m    [39m[38;5;15mweight_decay[39m[38;5;197m=[39m[38;5;141m0[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;242m# nesterov=True,[39m
+[38;5;15m)[39m
+
+[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mtotal_epochs[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m30[39m
+[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mno_aug_epochs[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m15[39m
+[38;5;15mtrain[39m[38;5;197m.[39m[38;5;15mcheckpointer[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15mdict[39m[38;5;15m([39m[38;5;15mperiod[39m[38;5;197m=[39m[38;5;141m2[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mmax_to_keep[39m[38;5;197m=[39m[38;5;141m10[39m[38;5;15m)[39m
+
+[38;5;15mtest[39m[38;5;197m.[39m[38;5;15mtest_dataset_names[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15mDATASETS[39m[38;5;197m.[39m[38;5;15mTEST[39m
+[38;5;15mtest[39m[38;5;197m.[39m[38;5;15maugment[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;81mTrue[39m
+[38;5;15mtest[39m[38;5;197m.[39m[38;5;15mscales[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15m([39m[38;5;141m1[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m0.75[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m0.83[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m1.12[39m[38;5;15m,[39m[38;5;15m [39m[38;5;141m1.25[39m[38;5;15m)[39m
+[38;5;15mtest[39m[38;5;197m.[39m[38;5;15mconf_thr[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;141m0.001[39m
+
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mtest[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15m[[39m
+[38;5;15m    [39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mbuild_yolox_test_loader[39m[38;5;15m)[39m[38;5;15m([39m
+[38;5;15m        [39m[38;5;15mdataset[39m[38;5;197m=[39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mBase_DatasetFromList[39m[38;5;15m)[39m[38;5;15m([39m
+[38;5;15m            [39m[38;5;15msplit[39m[38;5;197m=[39m[38;5;186m"[39m[38;5;186mtest[39m[38;5;186m"[39m[38;5;15m,[39m
+[38;5;15m            [39m[38;5;15mlst[39m[38;5;197m=[39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mget_detection_dataset_dicts[39m[38;5;15m)[39m[38;5;15m([39m[38;5;15mnames[39m[38;5;197m=[39m[38;5;15mtest_dataset_name[39m[38;5;15m,[39m[38;5;15m [39m[38;5;15mfilter_empty[39m[38;5;197m=[39m[38;5;81mFalse[39m[38;5;15m)[39m[38;5;15m,[39m
+[38;5;15m            [39m[38;5;15mimg_size[39m[38;5;197m=[39m[38;5;186m"[39m[38;5;186m$[39m[38;5;186m{test.test_size}[39m[38;5;186m"[39m[38;5;15m,[39m
+[38;5;15m            [39m[38;5;15mpreproc[39m[38;5;197m=[39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mValTransform[39m[38;5;15m)[39m[38;5;15m([39m
+[38;5;15m                [39m[38;5;15mlegacy[39m[38;5;197m=[39m[38;5;81mFalse[39m[38;5;15m,[39m
+[38;5;15m            [39m[38;5;15m)[39m[38;5;15m,[39m
+[38;5;15m        [39m[38;5;15m)[39m[38;5;15m,[39m
+[38;5;15m        [39m[38;5;15mtotal_batch_size[39m[38;5;197m=[39m[38;5;141m1[39m[38;5;15m,[39m
+[38;5;15m        [39m[38;5;242m# total_batch_size=64,[39m
+[38;5;15m        [39m[38;5;15mnum_workers[39m[38;5;197m=[39m[38;5;141m4[39m[38;5;15m,[39m
+[38;5;15m        [39m[38;5;15mpin_memory[39m[38;5;197m=[39m[38;5;81mTrue[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15m)[39m
+[38;5;15m    [39m[38;5;81mfor[39m[38;5;15m [39m[38;5;15mtest_dataset_name[39m[38;5;15m [39m[38;5;197min[39m[38;5;15m [39m[38;5;15mtest[39m[38;5;197m.[39m[38;5;15mtest_dataset_names[39m
+[38;5;15m][39m
+
+[38;5;15mdataloader[39m[38;5;197m.[39m[38;5;15mevaluator[39m[38;5;15m [39m[38;5;197m=[39m[38;5;15m [39m[38;5;15m[[39m
+[38;5;15m    [39m[38;5;15mL[39m[38;5;15m([39m[38;5;15mYOLOX_COCOEvaluator[39m[38;5;15m)[39m[38;5;15m([39m
+[38;5;15m        [39m[38;5;15mdataset_name[39m[38;5;197m=[39m[38;5;15mtest_dataset_name[39m[38;5;15m,[39m
+[38;5;15m        [39m[38;5;15mfilter_scene[39m[38;5;197m=[39m[38;5;81mFalse[39m[38;5;15m,[39m
+[38;5;15m    [39m[38;5;15m)[39m
+[38;5;15m    [39m[38;5;81mfor[39m[38;5;15m [39m[38;5;15mtest_dataset_name[39m[38;5;15m [39m[38;5;197min[39m[38;5;15m [39m[38;5;15mtest[39m[38;5;197m.[39m[38;5;15mtest_dataset_names[39m
+[38;5;15m][39m
+
+[0424_063129] det.yolox.engine.yolox_setup INFO@121: Full config saved to /home/belal/git/pose_6_d/yolox/output/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19/config.yaml
+[0424_063129] det.yolox.engine.yolox_setup INFO@125: seed: -1
+[0424_063129] d2.utils.env INFO@41: Using a generated random seed 29624426
+[0424_063129] det.yolox.engine.yolox_setup INFO@146: Used mmcv backend: cv2
+[0424_063130] d2.engine.launch ERROR@84: An error has been caught in function 'launch', process 'MainProcess' (19645), thread 'MainThread' (127236986844288):
+Traceback (most recent call last):
+
+  File "/home/belal/git/pose_6_d/yolox/./det/yolox/tools/main_yolox.py", line 70, in <module>
+    launch(
+    -> <function launch at 0x73b7c410f1c0>
+
+> File "/home/belal/git/detectron2/detectron2/engine/launch.py", line 84, in launch
+    main_func(*args)
+    |          -> (Namespace(config_file='configs/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19.py',...
+    -> <function main at 0x73b740b4e440>
+
+  File "/home/belal/git/pose_6_d/yolox/./det/yolox/tools/main_yolox.py", line 49, in main
+    cfg = setup(args)
+          |     -> Namespace(config_file='configs/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19.py', ...
+          -> <function setup at 0x73b8aaa2e290>
+
+  File "/home/belal/git/pose_6_d/yolox/./det/yolox/tools/main_yolox.py", line 42, in setup
+    register_datasets_in_cfg(cfg)
+    |                        -> {'train': {'output_dir': '/home/belal/git/pose_6_d/yolox/output/yolox/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_p...
+    -> <function register_datasets_in_cfg at 0x73b740b4e290>
+
+  File "/home/belal/git/pose_6_d/yolox/det/yolox/tools/../../../det/yolox/data/datasets/dataset_factory.py", line 61, in register_datasets_in_cfg
+    register_dataset(_mod_name, name, data_cfg=None)
+    |                |          -> 'hb_pbr_train'
+    |                -> 'hb_pbr'
+    -> <function register_dataset at 0x73b748b14670>
+
+  File "/home/belal/git/pose_6_d/yolox/det/yolox/tools/../../../det/yolox/data/datasets/dataset_factory.py", line 36, in register_dataset
+    register_func.register_with_name_cfg(dset_name, data_cfg)
+    |             |                      |          -> None
+    |             |                      -> 'hb_pbr_train'
+    |             -> <function register_with_name_cfg at 0x73b740b4d000>
+    -> <module 'det.yolox.data.datasets.hb_pbr' from '/home/belal/git/pose_6_d/yolox/det/yolox/tools/../../../det/yolox/data/dataset...
+
+  File "/home/belal/git/pose_6_d/yolox/det/yolox/tools/../../../det/yolox/data/datasets/hb_pbr.py", line 380, in register_with_name_cfg
+    DatasetCatalog.register(name, HB_PBR_Dataset(used_cfg))
+    |              |        |     |              -> {'name': 'hb_pbr_train', 'objs': ['01_bear', '02_benchvise', '03_round_car', '04_thin_cow', '05_fat_cow', '06_mug', '07_drill...
+    |              |        |     -> <class 'det.yolox.data.datasets.hb_pbr.HB_PBR_Dataset'>
+    |              |        -> 'hb_pbr_train'
+    |              -> <function _DatasetCatalog.register at 0x73b7be56ab90>
+    -> DatasetCatalog(registered datasets: coco_2014_train, coco_2014_val, coco_2014_minival, coco_2014_valminusminival, coco_2017_t...
+
+  File "/home/belal/git/pose_6_d/yolox/det/yolox/tools/../../../det/yolox/data/datasets/hb_pbr.py", line 45, in __init__
+    assert osp.exists(self.dataset_root), self.dataset_root
+           |   |      |    |              |    -> '/home/belal/git/pose_6_d/yolox/datasets/BOP_DATASETS/hb/train_pbr'
+           |   |      |    |              -> <det.yolox.data.datasets.hb_pbr.HB_PBR_Dataset object at 0x73b73ad74520>
+           |   |      |    -> '/home/belal/git/pose_6_d/yolox/datasets/BOP_DATASETS/hb/train_pbr'
+           |   |      -> <det.yolox.data.datasets.hb_pbr.HB_PBR_Dataset object at 0x73b73ad74520>
+           |   -> <function exists at 0x73b8aaa09fc0>
+           -> <module 'posixpath' from '/usr/lib/python3.10/posixpath.py'>
+
+AssertionError: /home/belal/git/pose_6_d/yolox/datasets/BOP_DATASETS/hb/train_pbr
+
+
