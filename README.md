@@ -14,3 +14,25 @@ source any_venv/bin/activate
 ## install requirements
 pip3 install -r requirements
 ```
+
+## Training a Model
+
+```shell
+./det/yolox/tools/train_yolox.sh \
+# GPUs you have, might be 0,1 etc.
+0 \
+# Path to the config file
+configs/bop_pbr/your_config.py
+```
+> TODO: write a tutorial on how to write config file
+
+## Testing a Model
+
+```shell
+./det/yolox/tools/test_yolox.sh \
+# GPUs you have, might be 0,1 etc.
+0 \
+# Path to the config file
+configs/bop_pbr/your_config.py \
+./output/bop_pbr/yolox_x_640_augCozyAAEhsv_ranger_30_epochs_hb_pbr_hb_test_primesense_bop19/model_final.pth"
+```
