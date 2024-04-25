@@ -1,29 +1,26 @@
 #!/usr/bin/env python3
+
+import sys
 import logging
 from loguru import logger as loguru_logger
 import os.path as osp
+#
+import cv2
+cv2.setNumThreads(0)  # pytorch issue 1355: possible deadlock in dataloader
+# OpenCL may be enabled by default in OpenCV3; disable it because it's not
+# thread safe and causes unwanted GPU memory allocations.
+cv2.ocl.setUseOpenCL(False)
 from setproctitle import setproctitle
 from detectron2.engine import (
     default_argument_parser,
     launch,
 )
-from detectron2.engine.defaults import create_ddp_model
-from detectron2.config import LazyConfig, instantiate
-
-import cv2
-
-cv2.setNumThreads(0)  # pytorch issue 1355: possible deadlock in dataloader
-# OpenCL may be enabled by default in OpenCV3; disable it because it's not
-# thread safe and causes unwanted GPU memory allocations.
-cv2.ocl.setUseOpenCL(False)
-
-import sys
-
+from detectron2.config import LazyConfig
+#
 cur_dir = osp.dirname(osp.abspath(__file__))
 sys.path.insert(0, osp.join(cur_dir, "../../../"))
 
 from lib.utils.time_utils import get_time_str
-import core.utils.my_comm as comm
 from core.utils.my_checkpoint import MyCheckpointer
 from det.yolox.engine.yolox_setup import default_yolox_setup
 from det.yolox.engine.yolox_trainer import YOLOX_DefaultTrainer

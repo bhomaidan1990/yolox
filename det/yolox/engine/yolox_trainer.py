@@ -3,51 +3,33 @@ import time
 import random
 import numpy as np
 import logging
-import os
 import os.path as osp
-import sys
-from typing import List, Mapping, Optional
-import weakref
+from typing import  Mapping, Sequence
 from collections import OrderedDict
-from typing import Optional, Sequence
 
 import core.utils.my_comm as comm
-import detectron2.data.transforms as T
 import torch
 from torch import nn
 from torch.cuda.amp import autocast, GradScaler
 import torch.distributed as dist
 from core.utils.my_writer import MyPeriodicWriter
 from det.yolox.utils import (
-    MeterBuffer,
     ModelEMA,
     all_reduce_norm,
-    get_model_info,
-    get_rank,
-    get_world_size,
-    gpu_mem_usage,
-    load_ckpt,
     occupy_mem,
-    is_parallel,
-    save_checkpoint,
-    setup_logger,
-    synchronize,
+    is_parallel
 )
-from detectron2.utils.events import EventStorage, get_event_storage
+from detectron2.utils.events import get_event_storage
 from detectron2.config.instantiate import instantiate
-from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.data.build import AspectRatioGroupedDataset
 from detectron2.engine import create_ddp_model, hooks
 from detectron2.engine.train_loop import TrainerBase
-from detectron2.evaluation import DatasetEvaluator, print_csv_format, verify_results
-from detectron2.utils.collect_env import collect_env_info
-from detectron2.utils.env import seed_all_rng
+from detectron2.evaluation import DatasetEvaluator, print_csv_format
 
 from fvcore.nn.precise_bn import get_bn_modules
-from lib.utils.setup_logger import setup_my_logger, log_first_n
 from omegaconf import OmegaConf
 from torch.nn.parallel import DistributedDataParallel, DataParallel
-
+#
 from lib.torch_utils.solver.grad_clip_d2 import maybe_add_gradient_clipping
 from lib.utils.config_utils import try_get_key
 from core.utils.my_checkpoint import MyCheckpointer
@@ -63,9 +45,9 @@ class YOLOX_DefaultTrainer(TrainerBase):
     """A trainer with default training logic. It does the following:
 
     1. Create a :class:`SimpleTrainer` using model, optimizer, dataloader
-       defined by the given config. Create a LR scheduler defined by the config.
+        defined by the given config. Create a LR scheduler defined by the config.
     2. Load the last checkpoint or `cfg.train.init_checkpoint`, if exists, when
-       `resume_or_load` is called.
+        `resume_or_load` is called.
     3. Register a few common hooks defined by the config.
 
     It is created to simplify the **standard model training workflow** and reduce code boilerplate
@@ -79,7 +61,7 @@ class YOLOX_DefaultTrainer(TrainerBase):
 
     1. Overwrite methods of this class, OR:
     2. Use :class:`SimpleTrainer`, which only does minimal SGD training and
-       nothing else. You can then add your own hooks if needed. OR:
+        nothing else. You can then add your own hooks if needed. OR:
     3. Write your own training loop similar to `tools/plain_train_net.py`.
 
     See the :doc:`/tutorials/training` tutorials for more details.

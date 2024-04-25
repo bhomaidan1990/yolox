@@ -1,33 +1,19 @@
-from itertools import count
-import os
 import os.path as osp
 from omegaconf import OmegaConf
-
 import torch
-import detectron2.data.transforms as T
 from detectron2.config import LazyCall as L
 from detectron2.data import get_detection_dataset_dicts
 from detectron2.solver.build import get_default_optimizer_params
-
-# import torch.nn as nn
-
+#
 from det.yolox.models import YOLOX, YOLOPAFPN, YOLOXHead
 from det.yolox.data import (
-    # COCODataset,
     TrainTransform,
     ValTransform,
-    # YoloBatchSampler,
-    # DataLoader,
-    # InfiniteSampler,
     MosaicDetection,
     build_yolox_train_loader,
-    build_yolox_test_loader,
+    build_yolox_test_loader
 )
 from det.yolox.data.datasets import Base_DatasetFromList
-from det.yolox.utils import LRScheduler
-
-# from detectron2.evaluation import COCOEvaluator
-# from det.yolox.evaluators import COCOEvaluator
 from det.yolox.evaluators import YOLOX_COCOEvaluator
 from lib.torch_utils.solver.lr_scheduler import flat_and_anneal_lr_scheduler
 
@@ -87,11 +73,6 @@ train = dict(
 )
 train = OmegaConf.create(train)
 
-
-# OmegaConf.register_new_resolver(
-#      "mul2", lambda x: x*2
-# )
-
 # --------------------------------------------------------------------
 # model
 # --------------------------------------------------------------------
@@ -139,10 +120,8 @@ lr_config = L(flat_and_anneal_lr_scheduler)(
     target_lr_factor=0.05,
 )
 
-
 DATASETS = dict(TRAIN=("",), TEST=("",))
 DATASETS = OmegaConf.create(DATASETS)
-
 
 dataloader = OmegaConf.create()
 dataloader.train = L(build_yolox_train_loader)(
@@ -175,12 +154,10 @@ dataloader.train = L(build_yolox_train_loader)(
     pin_memory=True,
 )
 
-
 val = dict(
     eval_cached=False,
 )
 val = OmegaConf.create(val)
-
 
 test = dict(
     test_dataset_names=DATASETS.TEST,
@@ -198,7 +175,6 @@ test = dict(
     fuse_conv_bn=True,
 )
 test = OmegaConf.create(test)
-
 
 # NOTE: for multiple test loaders, just write it as a list
 dataloader.test = [
@@ -218,7 +194,6 @@ dataloader.test = [
     )
     for test_dataset_name in test.test_dataset_names
 ]
-
 
 dataloader.evaluator = [
     L(YOLOX_COCOEvaluator)(

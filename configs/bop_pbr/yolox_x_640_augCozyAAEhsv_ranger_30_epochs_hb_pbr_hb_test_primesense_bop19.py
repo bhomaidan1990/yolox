@@ -1,10 +1,9 @@
 import os.path as osp
 
-import torch
 from detectron2.config import LazyCall as L
 from detectron2.solver.build import get_default_optimizer_params
 
-from .yolox_base import train, val, test, model, dataloader, optimizer, lr_config, DATASETS  # noqa
+from .yolox_base import train, val, test, model, dataloader, DATASETS  # noqa
 from det.yolox.data import build_yolox_test_loader, ValTransform
 from det.yolox.data.datasets import Base_DatasetFromList
 from detectron2.data import get_detection_dataset_dicts

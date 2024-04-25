@@ -142,7 +142,7 @@ class Base_DatasetFromList(data.Dataset):
             im_H (int):
             im_W (int):
         Returns:
-             augmented bbox (ndarray)
+            augmented bbox (ndarray)
         """
         x1, y1, x2, y2 = bbox_xyxy.copy()
         cx = 0.5 * (x1 + x2)
@@ -191,7 +191,7 @@ class Base_DatasetFromList(data.Dataset):
             cfg: upper format, the whole cfg; lower format, the input_cfg
             bbox_xyxy (np.ndarray):
         Returns:
-             center, scale
+            center, scale
         """
         x1, y1, x2, y2 = bbox_xyxy.copy()
         cx = 0.5 * (x1 + x2)
@@ -239,14 +239,15 @@ class Base_DatasetFromList(data.Dataset):
                 saturation_var=(0.95, 1.05),  #(1, 1),
                 contrast_var=(0.95, 1.05))  # (1, 1))  #
         elif aug_type.lower() == "aae":
-            import imgaug.augmenters as iaa  # noqa
-            from imgaug.augmenters import (Sequential, SomeOf, OneOf, Sometimes, WithColorspace, WithChannels, Noop,
-                                           Lambda, AssertLambda, AssertShape, Scale, CropAndPad, Pad, Crop, Fliplr,
-                                           Flipud, Superpixels, ChangeColorspace, PerspectiveTransform, Grayscale,
-                                           GaussianBlur, AverageBlur, MedianBlur, Convolve, Sharpen, Emboss, EdgeDetect,
-                                           DirectedEdgeDetect, Add, AddElementwise, AdditiveGaussianNoise, Multiply,
-                                           MultiplyElementwise, Dropout, CoarseDropout, Invert, ContrastNormalization,
-                                           Affine, PiecewiseAffine, ElasticTransformation, pillike, LinearContrast)  # noqa
+            from imgaug.augmenters import (
+                Sequential, SomeOf, OneOf, Sometimes, WithColorspace, WithChannels, Noop,
+                Lambda, AssertLambda, AssertShape, Scale, CropAndPad, Pad, Crop, Fliplr,
+                Flipud, Superpixels, ChangeColorspace, PerspectiveTransform, Grayscale,
+                GaussianBlur, AverageBlur, MedianBlur, Convolve, Sharpen, Emboss, EdgeDetect,
+                DirectedEdgeDetect, Add, AddElementwise, AdditiveGaussianNoise, Multiply,
+                MultiplyElementwise, Dropout, CoarseDropout, Invert, ContrastNormalization,
+                Affine, PiecewiseAffine, ElasticTransformation, pillike, LinearContrast
+            )  # noqa
             aug_code = """Sequential([
                 # Sometimes(0.5, PerspectiveTransform(0.05)),
                 # Sometimes(0.5, CropAndPad(percent=(-0.05, 0.1))),
@@ -272,23 +273,26 @@ class Base_DatasetFromList(data.Dataset):
                 ], random_order=False)"""
             color_augmentor = eval(aug_code)
         elif aug_type.lower() == "code":  # assume imgaug
-            import imgaug.augmenters as iaa
-            from imgaug.augmenters import (Sequential, SomeOf, OneOf, Sometimes, WithColorspace, WithChannels, Noop,
-                                           Lambda, AssertLambda, AssertShape, Scale, CropAndPad, Pad, Crop, Fliplr,
-                                           Flipud, Superpixels, ChangeColorspace, PerspectiveTransform, Grayscale,
-                                           GaussianBlur, AverageBlur, MedianBlur, Convolve, Sharpen, Emboss, EdgeDetect,
-                                           DirectedEdgeDetect, Add, AddElementwise, AdditiveGaussianNoise, Multiply,
-                                           MultiplyElementwise, Dropout, CoarseDropout, Invert, ContrastNormalization,
-                                           Affine, PiecewiseAffine, ElasticTransformation, pillike, LinearContrast)  # noqa
+            from imgaug.augmenters import (
+                Sequential, SomeOf, OneOf, Sometimes, WithColorspace, WithChannels, Noop,
+                Lambda, AssertLambda, AssertShape, Scale, CropAndPad, Pad, Crop, Fliplr,
+                Flipud, Superpixels, ChangeColorspace, PerspectiveTransform, Grayscale,
+                GaussianBlur, AverageBlur, MedianBlur, Convolve, Sharpen, Emboss, EdgeDetect,
+                DirectedEdgeDetect, Add, AddElementwise, AdditiveGaussianNoise, Multiply,
+                MultiplyElementwise, Dropout, CoarseDropout, Invert, ContrastNormalization,
+                Affine, PiecewiseAffine, ElasticTransformation, pillike, LinearContrast
+            )  # noqa
             aug_code = self.color_aug_code
             color_augmentor = eval(aug_code)
         elif aug_type.lower() == 'code_albu':
-            from albumentations import (HorizontalFlip, IAAPerspective, ShiftScaleRotate, CLAHE, RandomRotate90,
-                                        Transpose, ShiftScaleRotate, Blur, OpticalDistortion, GridDistortion,
-                                        HueSaturationValue, IAAAdditiveGaussianNoise, GaussNoise, MotionBlur,
-                                        MedianBlur, IAAPiecewiseAffine, IAASharpen, IAAEmboss, RandomContrast,
-                                        RandomBrightness, Flip, OneOf, Compose, CoarseDropout, RGBShift, RandomGamma,
-                                        RandomBrightnessContrast, JpegCompression, InvertImg)  # noqa
+            from albumentations import (
+                HorizontalFlip, IAAPerspective, ShiftScaleRotate, CLAHE, RandomRotate90,
+                Transpose, ShiftScaleRotate, Blur, OpticalDistortion, GridDistortion,
+                HueSaturationValue, IAAAdditiveGaussianNoise, GaussNoise, MotionBlur,
+                MedianBlur, IAAPiecewiseAffine, IAASharpen, IAAEmboss, RandomContrast,
+                RandomBrightness, Flip, OneOf, Compose, CoarseDropout, RGBShift, RandomGamma,
+                RandomBrightnessContrast, JpegCompression, InvertImg
+            )  # noqa
             aug_code = """Compose([
                 CoarseDropout(max_height=0.05*480, max_holes=0.05*640, p=0.4),
                 OneOf([
